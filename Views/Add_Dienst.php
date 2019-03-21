@@ -1,4 +1,5 @@
 <?php
+//Dienst hinzufügen
 require "../static/Login-Check.php";
 
 if(isset($_POST['submit'])){

@@ -1,4 +1,5 @@
 <?php
+//Dashboard
 require "../static/Login-Check.php";
 
 include('../Classes/DatabaseFunction.php');
