@@ -1,4 +1,5 @@
 <?php
+//Database Parameter
 class Database {
     //config
 	private $_connection;

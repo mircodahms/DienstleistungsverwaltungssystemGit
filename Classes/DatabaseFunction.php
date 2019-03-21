@@ -1,4 +1,5 @@
 <?php
+//Database Klassen
 require('Database.php');
 
 //Funktionen zur Datenverwaltung
