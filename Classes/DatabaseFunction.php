@@ -139,13 +139,17 @@ class DatabaseFunction
     }
 
 
-    function edit_dienst($dienstname, $abteilung, $Update, $id)
+    function edit_dienst($dienstname, $abteilung, $Update, $dienstold, $id)
     {
         $db = Database::getInstance();
         $mysqli = $db->getConnection();
         //echo $Dienstleistungsbezeichnung.$Abteilung.$Update.$id;exit;
-        $query = "update Dienste set Dienstleistungsbezeichnung = ' " . $dienstname . " ', Abteilung = ' " . $abteilung . " ' where Dienst_ID = " . $id . " ";
+        $query = "ALTER Table $dienstold RENAME $dienstname";
         $mysqli->query($query);
+        var_dump($query);
+        $query = "UPDATE Dienste set Dienstleistungsbezeichnung = ' " . $dienstname . " ', Abteilung = ' " . $abteilung . " ' where Dienst_ID = " . $id . " ";
+        $mysqli->query($query);
+        var_dump($query);
         $mysqli->close();
         echo '<script>';
         echo 'alert("Dienst wurde erfolgreich geupdatet.")';
@@ -164,7 +168,7 @@ class DatabaseFunction
         echo '<script>';
         echo 'alert("Dienst wurde erfolgreich geupdatet.")';
         echo '</script>';
-        header('location:Dienstetabelle.php');
+        header("location:Nutzerdaten.php?dienstname=$dienstname");
 
     }
 
@@ -206,7 +210,17 @@ class DatabaseFunction
         $mysqli->query($query);
         $mysqli->close();
         echo "<script>alert('Nutzungsdaten wurden erfolgreich gelöscht.')</script>";
-        header('location:Dienstetabelle.php');
+        header("location:Nutzerdaten.php?dienstname=$dienstname");
+    }
+
+    function showDiensteAttribute($dienstname)
+    {
+        $db = Database::getInstance();
+        $mysqli = $db->getConnection();
+        $query = "SELECT * from $dienstname";
+        $mysqli->query($query);
+        $stmt = $mysqli->query($query);
+        return $stmt;
     }
 }
 ?>
