@@ -1,9 +1,18 @@
 <?php
+//Nutzerdaten
 require "../static/Login-Check.php";
 
 include('../Classes/DatabaseFunction.php');
 $obj=new DatabaseFunction();
-$dienstname = $_POST['dienstname'];
+
+if( isset($_POST['dienstname']) )
+{
+    $dienstname = $_POST['dienstname'];
+}
+ELSE
+{
+    $dienstname = $_GET['dienstname'];
+}
 $rs=$obj->showData($dienstname);
 $res=$rs->fetch_object();
 $rss=$obj->showData($dienstname);
@@ -22,60 +31,28 @@ if(isset($_POST['submitDelete'])){
 }
 
 if(isset($_POST['submitNutzer'])) {
-
-    //foreach ($array as $key => $value)
-       // if ($key == 'ID') {}
-       // ELSE {//$Spalte = $key;
-        //$values = ($_POST[$key]);
-            $Spalte = "Organisationseinheit, Kostenstelle, Speicherplatz";
-                       //var_dump($Spalte);
-
-
                 // Create connection
                 $conn = new mysqli("localhost", "root", "", "diensteverwaltungssystem");
                 // Check connection
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
                 }
-                $Spalten = array ();
-                $i=0;
+                $sql = "INSERT INTO $dienstname () VALUES ()";
+                $conn->query($sql);
+                $IDS=$conn->insert_id;
                 foreach ($array as $key => $value) {
-                     $ars = array ();
-                     $ars[$i] = $key;
-                     var_dump($ars[$i]);
-                     $i++;
-                     if ($key == 'ID')  {}
-                     else if ($Spalten [] = $key);
-                    };
-
-
-                 $arr = array('Organisationseinheit', 'Kostenstelle', 'Speicherplatz', 'Test');
-                 $value = "'zwanzig', 'zwei', 'sieben', 'vier'";
-                 $i = count($arr);
-                 switch ($i) {
-                   case '1':
-                       $sql = "INSERT INTO $dienstname ($arr[0]) VALUES ($value)";
-                       break;
-                   case '2':
-                       $sql = "INSERT INTO $dienstname ($arr[0], $arr[1]) VALUES ($value)";
-                       break;
-                   case '3':
-                       $sql = "INSERT INTO $dienstname ($arr[0], $arr[1], $arr[2]) VALUES ($value)";
-                       break;
-                   case '4':
-                       $sql = "INSERT INTO $dienstname ($arr[0], $arr[1], $arr[2], $arr[3]) VALUES ($value)";
-                       break;
-                   case '5':
-                       $sql = "INSERT INTO $dienstname ($arr[0], $arr[1], $arr[2], $arr[3], $arr[4], $arr[5]) VALUES ($value)";
-                       break;
-                   case '6':
-                       $sql = "INSERT INTO $dienstname ($arr[0], $arr[1], $arr[2], $arr[3], $arr[4], $arr[5], $arr[6]) VALUES ($value)";
-                       break;
-                 }
-                    $conn->query($sql);
-                    var_dump($sql);
-                    $conn->close();
-                    header('location:Dienstetabelle.php');
+                 if ($key == 'ID')  {}
+                 else {
+                     $ID=$IDS;
+                     $values = ($_POST[$key]);
+                     $sql = "UPDATE $dienstname set $key = '$values' WHERE ID=$ID";
+                     $conn->query($sql);}}
+                     $conn->close();
+                 echo '<script>';
+                 echo 'alert("Neuer Nutzer wurde erfolgreich hinzugefügt.")';
+                 echo '</script>';
+                 echo '<form><input  type="hidden" name="dienstname" value="'.$dienstname.'"></form>';
+                 header("location:Nutzerdaten.php?dienstname=$dienstname");
 }
 ?>
 
@@ -89,16 +66,21 @@ if(isset($_POST['submitNutzer'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Diensteübersicht</title>
+    <title>Nutzerdaten</title>
     <link href="../Style_Sources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../Style_Sources/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     <link href="../Style_Sources/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
     <link href="../Style_Sources/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
     <link href="../static/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../static/css/css.css" rel="stylesheet">
     <link href="../Style_Sources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Script -->
+    <script src="../static/js/scripts.js"></script>
 </head>
 
 <body>
+
 <div id="wrapper">
     <!-- Navigation -->
     <?php include('Navigation_links.php') ?>;
@@ -131,15 +113,15 @@ if(isset($_POST['submitNutzer'])) {
                                     <tr class="odd gradeX">
                                         <?php
                                                 foreach ($array as $key => $value) {echo "<td>" . htmlentities(strtoupper($ress->$key));}?>
-                                                    <td><form action="Edit_Nutzerdaten.php" method="POST">
+                                                    <td><p><form action="Edit_Nutzerdaten.php" method="POST" style="float: left; margin-right: .5rem;">
                                                         <input  type="hidden" name="dienstname" <?php echo "value='$dienstname'>";?>
-                                                        <input  type="hidden" name="ID" value="<?php echo htmlentities($res->ID); ?>">
-                                                        <div class=col-md-4><input type="submit" class="btn btn-primary" name="submitEdit" value="Ä"></button></div></form>
+                                                        <input  type="hidden" name="ID" value="<?php echo htmlentities($ress->ID); ?>">
+                                                        <span class="icon-input-btn"><span class="glyphicon glyphicon-pencil"></span> <input type="submit" name="submitEdit" class="btn btn-default" value=""></span></form>
                                                     <form method="POST">
                                                         <input  type="hidden" name="dienstname" <?php echo "value='$dienstname'>";?>
-                                                        <input  type="hidden" name="ID" value="<?php echo htmlentities($res->ID); ?>">
-                                                        <div class=col-md-4><input type="submit" class="btn btn-primary" name="submitDelete" value="L"></button>
-                                                        </div></form></td>
+                                                        <input  type="hidden" name="ID" value="<?php echo htmlentities($ress->ID); ?>">
+                                                        <span class="icon-input-btn"><span class="glyphicon glyphicon-remove"></span> <input type="submit" name="submitDelete" onSubmit="return chkDeleteNutzer()" class="btn btn-default" value=""></span></form>
+                                                        </p></td>
                                         <?php }?>
                                     </tr>
                                     </tbody>
@@ -152,6 +134,46 @@ if(isset($_POST['submitNutzer'])) {
                     </div>
                     <!-- /.panel -->
                 </div>
+
+                <!-- /.col-lg-12 -->
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Attribute anpassen
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <label>Neues Attribut<span id="" style="font-size:11px;color:red">*</span>	</label>
+                                    </div>
+                                        <form method="post" >
+                                            <div class="col-lg-4">
+                                                <input class="form-control" name="Attribut" type="text" id="Attribut"  <br>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <input  type="hidden" name="dienstname" <?php echo "value='$dienstname'>";?>
+                                                <input type="submit" class="btn btn-primary" name="submitAtt" value="Neues Attribut hinzufügen">
+                                            </div>
+                                        </form>
+                                        <form method="post" action="Edit_Dienstleistung.php">
+                                            <div class="col-lg-4">
+                                                <label><span id="" style="font-size:11px;color:red"></span>	</label>
+                                            </div>
+                                            <div class="col-lg-4"><br>
+                                                <input  type="hidden" name="dienstname" <?php echo "value='$dienstname'>";?>
+                                                <input type="submit" class="btn btn-primary" name="editAtt" value="Attribute bearbeiten">
+                                            </div>
+                                        </form>
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+
 
                 <!-- /.col-lg-12 -->
                 <form method="post" >
@@ -173,7 +195,7 @@ if(isset($_POST['submitNutzer'])) {
                                                         else print ('<input type ="text" class="form-control" name="' . $key . '" placeholder="' . $key . '"><br>');
                                                         }; ?>
                                         <input  type="hidden" name="dienstname" <?php echo "value='$dienstname'>";?>
-                                        <input type="submit" class="btn btn-primary" name="submitNutzer" value="Neuen Nutzer hinzufügen">
+                                            <input type="submit" class="btn btn-primary" name="submitNutzer" value="Nutzer hinzufügen">
                                     </div>
                                 </div>
                                 <!-- /.panel-body -->
@@ -184,38 +206,6 @@ if(isset($_POST['submitNutzer'])) {
                     </div>
                     <!-- /.row -->
                 </form>
-
-                <!-- /.col-lg-12 -->
-            <form method="post" >
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Attribut ergänzen
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <div class="col-lg-4">
-                                    <label>Neues Attribut<span id="" style="font-size:11px;color:red">*</span>	</label>
-                                </div>
-                                <div class="col-lg-4">
-                                    <input class="form-control" name="Attribut" type="text" id="Attribut"  <br>
-                                </div>
-                                <div class="col-lg-4">
-                                    <input  type="hidden" name="dienstname" <?php echo "value='$dienstname'>";?>
-                                    <input type="submit" class="btn btn-primary" name="submitAtt" value="Neues Attribut hinzufügen">
-                                </div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-        </form>
-
-
 
         </div>
         <!-- /#page-wrapper -->

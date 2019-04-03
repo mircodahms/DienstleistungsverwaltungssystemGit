@@ -1,4 +1,5 @@
 <?php
+//Nutzerdaten bearbeiten
 require "../static/Login-Check.php";
 
 include('../Classes/DatabaseFunction.php');
@@ -20,16 +21,15 @@ if(isset($_POST['submit'])){
     }
     foreach ($array as $key => $value) {
         $value = $_POST[$key];
-        echo $value;
         $sql = "UPDATE $dienstname SET $key = '$value' WHERE ID = '" . $id . "'";
         $conn->query($sql);
-        var_dump($sql);
         //$conn->close();
     };
+        $conn->close();
+        header("location:Nutzerdaten.php?dienstname=$dienstname");
 }
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="deu">
 <head>
@@ -53,29 +53,24 @@ if(isset($_POST['submit'])){
 	 
 
 		<div id="page-wrapper">
-			<div class="row">
-				<!-- /.col-lg-12 -->
-			</div>
 			<!-- /.row -->
 			<div class="row">
-			    <div class="col-lg-12">
 			        <div class="panel panel-default">
 			            <div class="panel-heading">Nutzungsdaten bearbeiten</div>
 			                <div class="panel-body">
 			                    <div class="row">
 			                        <div class="col-lg-10">
 			                            <div class="form-group">
-		                                    <div class="col-lg-4">
                                                 <?php
                                                 foreach ($array as $key => $value) {?>
-                                                    <div class="form-group">
                                                         <div class="col-lg-4">
-                                                            <label><?php echo $key;?><span id="" style="font-size:11px;color:red">*</span>	</label>
+                                                            <label><?php echo $key;?><span id="" style="font-size:11px;color:red"></span></label>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" name="<?php echo $key;?>" id="Dienstleistungsbezeichnung"  value="<?php echo $res->$key;?>" required="required"">
+                                                            <input class="form-control" name="<?php echo $key;?>" id="Dienstleistungsbezeichnung"  value="<?php echo $res->$key;?>" required="required">
+                                                            <span style="font-size:12px;"></span>
                                                         </div>
-                                                    </div><br>
+                                                        <br><br>
                                                <?php } ?>
                                                       <input  type="hidden" name="dienstname" <?php echo "value='$dienstname'>";?>
                                                       <input  type="hidden" name="ID" <?php echo "value='$id'>";?>

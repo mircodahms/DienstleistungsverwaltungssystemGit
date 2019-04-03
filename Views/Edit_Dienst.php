@@ -8,13 +8,12 @@ $id=$_GET['cid'];
 $rs=$obj->showDienstewithID($id);
 $res=$rs->fetch_object();
 
-if(isset($_POST['submit'])){
+if(isset($_POST['submit'])) {
 
     // echo  $id=$_GET['cid'];exit;
     //echo $_POST['course-short'].$_POST['course-full'].$_POST['udate'].$id;exit;
-    $obj->edit_dienst($_POST['dienstname'],$_POST['abteilung'],$_POST['Update'],$id);
+    $obj->edit_dienst($_POST['dienstname'], $_POST['abteilung'], $_POST['Update'], $_POST[dienstold], $id);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -69,10 +68,9 @@ if(isset($_POST['submit'])){
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">Ausgewählten Dienst bearbeiten</div>
-						<div class="panel-body">
-							<div class="row">
-						 	<div class="col-lg-10">
-									
+						    <div class="panel-body">
+							    <div class="row">
+						 	        <div class="col-lg-10">
 										<div class="form-group">
 											<div class="col-lg-4">
 					                        <label>Dienstleistungsbezeichnung<span id="" style="font-size:11px;color:red">*</span>	</label>
@@ -93,25 +91,22 @@ if(isset($_POST['submit'])){
                                                 </div>
                                         </div><br><br>
 										
-	<div class="form-group">
-	<div class="col-lg-4">
-	 <label>Datum</label>
-	</div>
-	<div class="col-lg-6">
-	<input class="form-control" value="<?php echo date('d-m-Y');?>" readonly="readonly" name="Update">
+                                        <div class="form-group">
+                                        <div class="col-lg-4">
+                                         <label>Datum</label>
+                                        </div>
+	                                        <div class="col-lg-6">
+	                                            <input class="form-control" value="<?php echo date('d-m-Y');?>" readonly="readonly" name="Update">
 	
-	</div>
-	</div>
-	</div>	
-										
-		<br><br>		
+                                            </div>
+	                                    </div>
+	                                </div><br><br>
 		
-							<div class="form-group">
-											<div class="col-lg-4">
-												
-											</div>
-											<div class="col-lg-6"><br><br>
-							<input type="submit" class="btn btn-primary" name="submit" value="Update Dienst"></button>
+                                    <div class="form-group">
+                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-6"><br><br>
+                                    <input type="hidden" name="dienstold" value="<?php echo $res->Dienstleistungsbezeichnung;?>">
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Update Dienst"></button>
 											</div>
 											
 										</div>		

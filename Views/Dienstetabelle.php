@@ -1,4 +1,5 @@
 <?php
+//Dienstetabelle
 require "../static/Login-Check.php";
    
     include('../Classes/DatabaseFunction.php');
@@ -28,6 +29,9 @@ require "../static/Login-Check.php";
     <link href="../Style_Sources/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
     <link href="../static/css/sb-admin-2.css" rel="stylesheet">
     <link href="../Style_Sources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Script -->
+    <script src="../static/js/scripts.js"></script>
 </head>
 
 <body>
@@ -66,7 +70,7 @@ require "../static/Login-Check.php";
                                             <td><?php echo htmlentities(strtoupper($res->Abteilung));?></td>
                                             <td><?php echo htmlentities($res->Erstellungsdatum);?></td>
                                             <td>&nbsp;<a href="Edit_Dienst.php?cid=<?php echo htmlentities($res->Dienst_ID);?>"> <p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a href="Dienstetabelle.php?del=<?php echo htmlentities($res->Dienst_ID); ?>"> <p class="fa fa-times-circle"></p></a>
+                                                <a href="Dienstetabelle.php?del=<?php echo htmlentities($res->Dienst_ID); ?>" onclick="chkDeleteDienst()"> <p class="fa fa-times-circle"></p></a>
                                                   <form action="Nutzerdaten.php" method="POST"><input  type="hidden" name="dienstname" <?php echo "value='$res->Dienstleistungsbezeichnung'>";?>
                                                   <div class="form-group"><input type="submit" class="btn btn-primary" name="submit" value="Nutzer"></button>
                                                   </div></form></td>

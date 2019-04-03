@@ -99,7 +99,7 @@ if(isset($_GET['del']))
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h4 class="page-header"> <?php echo strtoupper("Willkommen, "." ".htmlentities($_SESSION['login']));?></h4>
+                <h4 class="page-header"> <?php echo ("Dashboard, eingeloggt als: "." ".htmlentities($_SESSION['login']));?></h4>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -113,10 +113,38 @@ if(isset($_GET['del']))
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
+                                <div style="margin-left: 10%;">
 
                                 <!-- Dashboard-Inhalt -->
-                                Platzhalter für Startseite
-
+                                <div><b>Neue Dienstleistung erstellen</b></div><br>
+                                <p>Hier können Sie eine neue Dienstleistung hinzufügen. Gleichzeitig wird eine Tabelle für die Dienstleistung erstellt, inder die Nutzungsdaten verwaltet werden können.</p>
+                                <form method="post" action="Add_Dienst.php">
+                                    <div class="col-lg-4">
+                                        <input type="submit" class="btn btn-primary" name="editAtt" value="Neue Dienstleistung">
+                                    </div>
+                                </form><br><br><br><br>
+                                <div><b>Dienstleistungen einsehen oder bearbeiten</b></div><br>
+                                <p>Hier finden Sie eine Auflistung aller bestehenden Dienstleistungen. Außerdem können Sie hier Dienstleistungen bearbeiten oder löschen.</p>
+                                <form method="post" action="Dienstetabelle.php">
+                                    <div class="col-lg-4">
+                                        <input type="submit" class="btn btn-primary" name="editAtt" value="Diensteübersicht">
+                                    </div>
+                                </form><br><br><br><br>
+                                <div><b>Nutzungsdaten einsehen oder bearbeiten</b></div><br>
+                                <p>Hier finden Sie eine Auflistung aller bestehenden Dienstleistungen. Außerdem können Sie hier wählen, welche Nutzungsdaten Sie einsehen wollen.</p>
+                                <form method="post" action="Dienstetabelle.php">
+                                    <div class="col-lg-4">
+                                        <input type="submit" class="btn btn-primary" name="editAtt" value="Nutzungsdaten">
+                                    </div>
+                                </form><br><br><br><br>
+                                <div><b>Weitere Dienstattribute erstellen oder bearbeiten</b></div><br>
+                                <p>Hier finden Sie eine Auflistung aller bestehenden Dienstleistungen. Außerdem können Sie bei den Nutzungsdaten der jeweiligen Dienste Attribute bearbeiten oder neue Attribute erstellen</p>
+                                <form method="post" action="Dienstetabelle.php">
+                                    <div class="col-lg-4">
+                                        <input type="submit" class="btn btn-primary" name="editAtt" value="Dienstattribute">
+                                    </div>
+                                </form><br><br><br><br>
+                                </div>
                             </div>
                             <!-- /.col-lg-6 (nested) -->
                         </div>
